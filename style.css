@@ -1,0 +1,69 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: auto;
+    margin-top: 0px;
+    width: 90%;
+    background-color: #f3fff3;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    background: linear-gradient(to bottom, #f7ffe4, rgb(216, 250, 224));
+    background-size: cover;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+nav {
+    text-align: center;
+    margin-top: 15px;
+}
+a {
+    border-style: solid; border-width: 2px;
+    border-radius: 25px;
+    color: rgb(57, 116, 57);
+    background-color: rgb(232, 245, 207);
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+a:hover{
+    color:rgb(230, 223, 180);
+    background-color: rgb(57, 78, 19);
+}
+a:active{
+    color:rgb(229, 255, 221);
+    background-color: rgb(82, 129, 82);
+    border-style: inset;
+}
+input:focus{
+    background-color: #c7f1c7;
+    outline: none;}
+
+main {
+    color: rgb(9, 22, 9);
+    text-align: justify;
+    font-size: 20px;
+    margin: 0;
+    padding: 20px;
+    background-color: rgb(216, 250, 224);
+}
+h1 {
+    color: rgb(57, 78, 19);
+    text-align: center;
+    font-size: 60px;
+}
+h2 {
+    color: rgb(58, 58, 58);
+    text-align: center;
+    padding: 10px;
+    font-size: 30px;
+}
+h3 {
+    color: rgb(54, 54, 54);
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+}
