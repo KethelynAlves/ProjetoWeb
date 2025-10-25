@@ -1,67 +1,68 @@
+/* Geral */
 body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    margin: auto;
-    margin-top: 0px;
-    width: 100%;
-    background-color: #f3f3e6;
-}
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-header {
-    background-size: cover;
-    padding-top: 20px;
-    padding-bottom: 50px;
-}
-nav {
-    text-align: center;
-    margin-top: 15px;
-    background-color: #f3f3e6;
-}
-a {
-    color: rgb(185, 35, 15);
-    background-color:#f3f3e6;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: inline-block;
-}
-a:hover{
-    color:rgb(250, 247, 226);
-    background-color: rgb(176, 197, 136);
-}
-a:active{
-    color:rgb(229, 255, 221);
-    background-color: rgb(82, 129, 82);
-    border-style: inset;
-}
-input:focus{
-    background-color: #c7f1c7;
-    outline: none;}
-
-main {
-    color: rgb(9, 22, 9);
-    text-align: justify;
-    font-size: 20px;
-    margin: 0;
-    padding: 20px;
-}
-h1 {
-    color: rgb(57, 78, 19);
-    text-align: justify;
-    font-size: 60px;
-    padding: 20px;
-}
-h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdfdfd;
     color: rgb(58, 58, 58);
-    text-align: justify;
-    padding: 2px;
-    font-size: 30px;
 }
-h3 {
-    color: rgb(54, 54, 54);
+
+
+/* Logo */
+.logo {
+    width: 100px;
+    height: 100px;
+}
+
+/* Navbar */
+.custom-navbar {
+    background-color: #f4f4f4 !important;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.nav-link {
+    color: rgb(58, 58, 58) !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #3a7c3a !important;
+    text-decoration: underline;
+}
+
+/* Seção Sobre */
+.sobre {
+    background-color: #b9e6a1; /* verde pastel */
+    padding: 40px 0;           /* só padding vertical */
+}
+
+.sobre .container {
+    background: none;
+    padding: 0 60px;           /* espaçamento interno lateral */
+}
+
+.sobre h2 {
+    color: rgb(58, 58, 58);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.sobre p {
+    color: rgb(58, 58, 58);
+    line-height: 1.6;
     text-align: justify;
-    padding: 5px;
-    font-size: 20px;
+}
+
+.texto-sobre {
+    color: rgb(58, 58, 58);
+}
+
+/* Footer */
+.custom-footer {
+    background-color: #f1f1f1;
+    color: rgb(58, 58, 58);
+    border-top: 2px solid #ccc;
+}
+
+.custom-footer p {
+    margin: 3px 0;
+    font-size: 14px;
 }
