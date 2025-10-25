@@ -5,12 +5,36 @@ body {
     color: rgb(58, 58, 58);
 }
 
+ /* Tabela Glossário */
+.table-geral {
+
+    box-shadow: 0 0 10px rgba(215, 103, 232, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-geral th {
+    background-color: #d4adee; /* verde */
+}
+
+.table-geral tbody tr:hover td{
+    background-color: rgb(187, 180, 201);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+
 
 /* Logo */
 .logo {
     width: 100px;
     height: 100px;
+    transition: transform 0.3s ease;
 }
+.logo:hover {
+    transform: scale(1.1); /* aumenta 10% */
+}
+
 
 /* Navbar */
 .custom-navbar {
@@ -29,27 +53,16 @@ body {
 }
 
 /* Seção Sobre */
-.sobre {
-    background-color: #b9e6a1; /* verde pastel */
-    padding: 40px 0;           /* só padding vertical */
+.sobre-home {
+    background-color: #caeab9; /* verde pastel */
+    padding: 40px 0;          
 }
 
-.sobre .container {
-    background: none;
-    padding: 0 60px;           /* espaçamento interno lateral */
+.sobre-tipoflores {
+    background-color: #e7d9f0; /* roxo pastel */
+    padding: 40px 0;           
 }
 
-.sobre h2 {
-    color: rgb(58, 58, 58);
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.sobre p {
-    color: rgb(58, 58, 58);
-    line-height: 1.6;
-    text-align: justify;
-}
 
 .texto-sobre {
     color: rgb(58, 58, 58);
