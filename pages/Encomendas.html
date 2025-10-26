@@ -42,42 +42,30 @@
     </header>
 
     <main class="sobre-form my-5">
-        <section class="container">
+        <div class="container">
             <article class="row align-items-center g-4">
                 <section class="col-md-8 texto-sobre">
                     <h2>Encomende flores para toda São Paulo!</h2>
                     <p>Sua fonte de flores frescas e arranjos encantadores.</p>
                
-                     <form action="Encomendas.html" method="post">
+                    <form action="Encomendas.html" method="post">
             <fieldset>
                 <legend>Formulário para Encomendas</legend>
 
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required><br><br>
+                <input type="text" id="nome" name="nome" required>
 
-            
-            <script>
-                const slider = document.getElementById("idadeslider");
-                const output = document.getElementById("idadevalor");
-
-                slider.oninput = function() {
-                    output.textContent = this.value;
-                }
-            </script>
- 
                 <label for="celular">Celular:</label>
                 <input type="tel" id="celular" name="celular" placeholder="12 34356-7890" 
-                    pattern="[0-9]{2} [0-9]{4}-[0-9]{4}"><br><br>
+                    pattern="[0-9]{2} [0-9]{4}-[0-9]{4}">
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br><br>
+                <input type="email" id="email" name="email" required>
 
                 <label for="endereco">Endereço:</label>
-                <input type="text" id="endereco" name="endereco" required>      
-                
-                <br><br>
+                <input type="text" id="endereco" name="endereco" required>     
 
-                <legend>Pedido:</legend>
+                <legend>Tamanho do pedido:</legend>
                 <input type="radio" id="unitario" name="Pedido" value="Unitario" checked>
                 <label for="unitario">Unitário</label>
 
@@ -89,15 +77,16 @@
 
                 <input type="radio" id="grande" name="Pedido" value="Grande">
                 <label for="grande">Grande</label>
-                </fieldset><br>
+                <br>
+
+                <label for="nomeFlor">Tipo de flor/arranjo/cesta:</label>
+                <input type="text" id="nomeFlor" name="nomeFlor" required>
 
                 <label for="chegada">Data requerida:</label>
-                <input type="date" id="data" name="dataRequerida" required><br><br>
+                <input type="date" id="data" name="dataRequerida" required>
 
                 <label for="horario">Horario requerido:</label>
                 <input type="date" id="horario" name="horarioRequerido" required>
-
-                <br><br>
 
                 <label for="Forma de Pagamento">Forma de Pagamento:</label>
                 <select name="pagamento" id="pagamento">
@@ -112,12 +101,9 @@
                     </optgroup>
                 </select><br><br>
 
-                <input type="checkbox" id="pedidoEspecial" name="pedidoEspecial" value="sim">
-                <label for="pedidoEspecial">Quer reservar com um pedido especial?</label><br><br>  
-
-                <label for="pedido">Digite aqui o pedido especial, faremos o possível para atendê-lo:</label><br>
+                <label for="pedido">Quer reservar com um pedido especial?Digite aqui o pedido especial, faremos o possível para atendê-lo:</label><br>
                 <textarea id="pedido" name="pedido" rows="5" cols="60" 
-                    placeholder="Digite aqui seu pedido..."></textarea><br><br>
+                    placeholder="Digite aqui seu pedido..."></textarea>
                     
                 <input type="submit" value="Solicitar Encomenda" class="btn btn-outline-danger"
                     onclick="alert('Obrigado! Em breve, entraremos em contato para confirmação de sua Encomenda.')">
@@ -125,12 +111,12 @@
             </form>   
                 </section>
                 <figure class="col-md-4 text-center">
-                    <img src="../images/flores rosas com carta.jpg" class="img-fluid rounded shadow" alt="Buque de rosas">
+                    <img src="../images/flores rosas com carta.png" class="img-fluid rounded shadow" alt="Buque de rosas">
                     <br><br>
                     <img src="../images/aquarelaflor.png" class="img-fluid rounded shadow" alt="Desenho aquarela de flor">
                 </figure>
             </article>
-        </section>
+        </div>
     </main>
     <footer class="text-center py-4 custom-footer">
         <p>Desenvolvido por: <strong>Floris Webdesigns</strong></p>
