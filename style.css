@@ -63,6 +63,15 @@ body {
     padding: 40px 0;           
 }
 
+.sobre-arranjos{
+    background-color: #fffbbe; /* amarelo pastel */
+    padding: 40px 0;  
+}
+
+.sobre-cestas{
+    background-color: #d9edf7; /* azul pastel */
+    padding: 40px 0;  
+}
 
 .texto-sobre {
     color: rgb(58, 58, 58);
