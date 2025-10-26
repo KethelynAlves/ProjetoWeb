@@ -4,6 +4,11 @@ body {
     color: rgb(58, 58, 58);
 }
 
+h2::after {
+    content: " 🌸";
+}
+
+
  /* Tabela Glossário */
 .table-geral {
 
