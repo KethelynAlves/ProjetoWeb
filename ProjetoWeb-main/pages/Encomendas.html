@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="../style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floricultura Fiore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary custom-navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../home.html">
+                    <img src="../images/FloriCultura.png" alt="Ir para a home" class="logo">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Alternar navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="../home.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Arranjos.html">Arranjos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="TiposFlores.html">Glossário das Flores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Cestas.html">Cestas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Encomendas.html">Encomende</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Contato.html">Nossos contatos</a></li>
+                    </ul>
+
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="sobre my-5">
+        <div class="container">
+            <article class="row align-items-center g-4">
+                <section class="col-md-12 texto-sobre">
+                    <h2>Encomende flores para toda São Paulo!</h2>
+                    <p>Sua fonte de flores frescas e arranjos encantadores.</p>
+                <figure class="text-left">
+                    <img src="../images/flores rosas com carta.jpg" class="img-fluid rounded shadow" alt="Buque de rosas">
+                </figure>
+                     <form action="Encomendas.html" method="post">
+            <fieldset>
+                <legend>Formulário para Encomendas</legend>
+
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br><br>
+
+            
+            <script>
+                const slider = document.getElementById("idadeslider");
+                const output = document.getElementById("idadevalor");
+
+                slider.oninput = function() {
+                    output.textContent = this.value;
+                }
+            </script>
+ 
+                <label for="celular">Celular:</label>
+                <input type="tel" id="celular" name="celular" placeholder="12 34356-7890" 
+                    pattern="[0-9]{2} [0-9]{4}-[0-9]{4}"><br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" required>      
+                
+                <br><br>
+
+                <fieldset> 
+                <legend>Buque:</legend>
+                <input type="radio" id="unitario" name="buque" value="Unitario" checked>
+                <label for="unitario">Unitário</label>
+
+                <input type="radio" id="pequeno" name="chalé" value="Pequeno">
+                <label for="pequeno">Pequeno</label>
+
+                <input type="radio" id="medio" name="chalé" value="Medio">
+                <label for="medio">Médio</label>        
+
+                <input type="radio" id="grande" name="chalé" value="Grande">
+                <label for="grande">Grande</label>
+                </fieldset><br>
+
+                <label for="chegada">Data requerida:</label>
+                <input type="date" id="data" name="dataRequerida" required><br><br>
+
+                <label for="horario">Horario requerido:</label>
+                <input type="date" id="horario" name="horarioRequerido" required>
+
+                <br><br>
+
+                <label for="Forma de Pagamento">Forma de Pagamento:</label>
+                <select name="pagamento" id="pagamento">
+                    <option value="transferencia" selected>transferência(TED/DOC)</option>
+                    <option value="pix">Pix</option>
+                    <option value="deposito">Depósito</option>
+
+                    <optgroup label="Cartão de Crédito">
+                        <option value="mastercard">MasterCard</option>   
+                        <option value="visa">Visa</option>
+                        <option value="elo">Elo</option>
+                    </optgroup>
+                </select><br><br>
+
+                <input type="checkbox" id="pedidoEspecial" name="pedidoEspecial" value="sim">
+                <label for="pedidoEspecial">Quer reservar com um pedido especial?</label><br><br>  
+
+                <label for="pedido">Digite aqui o pedido especial, faremos o possível para atendê-lo:</label><br>
+                <textarea id="pedido" name="pedido" rows="5" cols="60" 
+                    placeholder="Digite aqui seu pedido..."></textarea><br><br>
+                    
+                <input type="submit" value="Solicitar Encomenda"
+                    onclick="alert('Obrigado! Em breve, entraremos em contato para confirmação de sua Encomenda.')">
+            </fieldset>  
+            </form>   
+                </section>
+            </article>
+        </div>
+    </main>
+</body>
+</html>
