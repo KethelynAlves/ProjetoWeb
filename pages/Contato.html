@@ -4,11 +4,10 @@
     <link rel="stylesheet" href="../style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="Floricultura, Contato, Holambra, Email">
-    <meta name="description" content="Contato da FloriCultura.">
+    <meta name="keywords" content="Floricultura, Contato, Holambra, Email, Atendimento">
+    <meta name="description" content="Entre em contato com a FloriCultura.">
     <title>Contato - FloriCultura</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <header>
@@ -41,7 +40,7 @@
         </nav>
     </header>
 
-    <main class="sorbe-contato my-5">
+    <main class="sobre-contato my-5">
         <div class="container">
             <section class="mb-5">
                 <h2>Contate-nos e nos diga o que necessita!</h2>
@@ -58,9 +57,12 @@
                 </div>
             </section>
 
-            <section>
-                <h3>Envie sua Mensagem</h3>
-                <form>
+            <main class="my-5">
+                <div class="container">
+                    <article class="row align-items-center g-4">
+                <section class="col-md-8 texto-sobre">
+                <fieldset>
+                    <legend>Envie sua Mensagem</legend>
                     <label for="nome" class="form-label">Nome:</label>
                     <input type="text" class="form-control" id="nome" name="nome" required><br>
 
@@ -82,13 +84,13 @@
                     <label for="mensagem" class="form-label">Mensagem:</label><br>
                     <textarea id="mensagem" name="mensagem" class="form-control" rows="6" placeholder="Digite aqui sua mensagem..." required></textarea>
                         <br>
-                    <button type="submit" class="btn btn-success">Enviar Mensagem</button>
+                    <input type="submit" value="Enviar Mensagem" class="btn btn-outline-success"
+                        onclick="alert('Obrigado por entrar em contato! Responderemos em breve.')">
+                    </fieldset>
                 </form>
             </section>
         </div>
     </main>
-
-
     <footer class="text-center py-4 custom-footer">
         <p>Desenvolvido por: <strong>Floris Webdesigns</strong></p>
         <p>Copyright © 2000 - 2025 www.florifloricultura.com.br | Todos os direitos reservados.</p>
