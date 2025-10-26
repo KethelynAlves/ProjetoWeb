@@ -13,7 +13,7 @@ body {
 }
 
 .table-geral th {
-    background-color: #d4adee; /* verde */
+    background-color: #d4adee;
 }
 
 .table-geral tbody tr:hover td{
@@ -29,7 +29,7 @@ body {
     transition: transform 0.3s ease;
 }
 .logo:hover {
-    transform: scale(1.1); /* aumenta 10% */
+    transform: scale(1.1);
 }
 
 
