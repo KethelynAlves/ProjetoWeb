@@ -55,17 +55,20 @@
                 <legend>Formulário para Encomendas</legend>
 
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
+                <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
+                <span id="erroNome" style="color: red;"></span>
 
                 <label for="celular">Celular:</label>
-                <input type="tel" id="celular" name="celular" placeholder="12 34356-7890" 
-                    pattern="[0-9]{2} [0-9]{4}-[0-9]{4}">
+                <input type="tel" id="celular" name="celular" placeholder="12 34356-7890">
+                <span id="erroCelular" style="color: red;"></span>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required placeholder="Digite seu email">
+                <span id="erroEmail" style="color: red;"></span>
 
                 <label for="endereco">Endereço:</label>
-                <input type="text" id="endereco" name="endereco" required>     
+                <input type="text" id="endereco" name="endereco" required placeholder="Rua, número, bairro, cidade, estado, CEP">   
+                <span id="erroEndereco" style="color: red;"></span>  
 
                 <legend>Tamanho do pedido:</legend>
                 <input type="radio" id="unitario" name="Pedido" value="Unitario" checked>
@@ -82,16 +85,19 @@
                 <br>
 
                 <label for="nomeFlor">Tipo de flor/arranjo/cesta:</label>
-                <input type="text" id="nomeFlor" name="nomeFlor" required>
+                <input type="text" id="nomeFlor" name="nomeFlor" required placeholder="Ex: Rosas, Girassóis, Cesta Primavera">
+                <span id="erroFlor" style="color: red;"></span>
 
-                <label for="chegada">Data requerida:</label>
+                <label for="dataRequerida">Data requerida:</label>
                 <input type="date" id="data" name="dataRequerida" required>
+                <span id="erroData" style="color: red;"></span>
 
                 <label for="horario">Horario requerido:</label>
-                <input type="date" id="horario" name="horarioRequerido" required>
+                <input type="time" id="horario" name="horarioRequerido" required>
+                <span id="erroHorario" style="color: red;"></span>
 
                 <label for="Forma de Pagamento">Forma de Pagamento:</label>
-                <select name="pagamento" id="pagamento">
+                <select name="pagamento" id="pagamento" required>
                     <option value="transferencia" selected>transferência(TED/DOC)</option>
                     <option value="pix">Pix</option>
                     <option value="deposito">Depósito</option>
@@ -110,6 +116,8 @@
                 <button type="submit">Enviar Encomenda</button>
             </fieldset>  
             </form>
+
+            <script src="scripts.js"></script>
             
             </section>
                 <figure class="col-md-4 text-center">
