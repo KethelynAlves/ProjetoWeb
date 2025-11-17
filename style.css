@@ -86,17 +86,17 @@ h2::after {
 }
 
 
-label {
+#fieldset-encomenda label {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-label input[type=checkbox], input[type=radio] {
+#fieldset-encomenda label input[type=checkbox], input[type=radio] {
     margin-left: 10px !important;
     width: 20px !important;
 }
 
-fieldset input, textarea, button {
+#fieldset-encomenda input, textarea, button {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
