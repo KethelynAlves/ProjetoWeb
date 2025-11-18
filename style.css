@@ -1,9 +1,13 @@
-/* Geral */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fdfdfd;
     color: rgb(58, 58, 58);
 }
+
+h2::after {
+    content: " 🌸";
+}
+
 
  /* Tabela Glossário */
 .table-geral {
@@ -14,7 +18,7 @@ body {
 }
 
 .table-geral th {
-    background-color: #d4adee; /* verde */
+    background-color: #d4adee;
 }
 
 .table-geral tbody tr:hover td{
@@ -23,8 +27,6 @@ body {
     transition: 0.3s;
 }
 
-
-
 /* Logo */
 .logo {
     width: 100px;
@@ -32,7 +34,7 @@ body {
     transition: transform 0.3s ease;
 }
 .logo:hover {
-    transform: scale(1.1); /* aumenta 10% */
+    transform: scale(1.1);
 }
 
 
@@ -54,7 +56,7 @@ body {
 
 /* Seção Sobre */
 .sobre-home {
-    background-color: #caeab9; /* verde pastel */
+    background-color: #caeab9a4; /* verde pastel */
     padding: 40px 0;          
 }
 
@@ -71,6 +73,36 @@ body {
 .sobre-cestas{
     background-color: #d9edf7; /* azul pastel */
     padding: 40px 0;  
+}
+
+.sobre-contato{
+    background-color: #f3f3f3; /* lilás pastel */
+    padding: 40px 0;  
+}
+
+.sobre-form{
+    background-color: #ffdcf7; /* rosa pastel */
+    padding: 40px 0;
+}
+
+
+#fieldset-encomenda label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#fieldset-encomenda label input[type=checkbox], input[type=radio] {
+    margin-left: 10px !important;
+    width: 20px !important;
+}
+
+#fieldset-encomenda input, textarea, button {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
 }
 
 .texto-sobre {
