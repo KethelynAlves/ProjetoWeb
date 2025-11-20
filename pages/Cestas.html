@@ -33,15 +33,15 @@
                         <li class="nav-item"><a class="nav-link" href="Contato.html">Nossos contatos</a></li>
                     </ul>
 
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                        <button class="btn btn-success" type="submit">Search</button>
+                    <form id="searchForm" class="d-flex" role="search">
+                        <input id="searchForm" class="form-control me-2" type="search" placeholder="O que procura?" aria-label="Buscar">
+                        <button class="btn btn-danger" type="submit">Buscar</button>
                     </form>
                 </section>
             </section>
         </nav>
     </header>
-    <main class="sobre-cestas my-5">
+    <main class="sobre-cestas my-8">
         <section class="container">
             <h2 class="mb-4 text-center">Cestas de Flores Exclusivas</h2>
             <p class="text-center mb-5">Escolha entre nossas cestas prontas, com flores frescas e imagens demonstrativas.</p>
@@ -55,7 +55,7 @@
                             <p class="card-text fw-bold">Preço: R$ 120,00</p>
                             <img src="../images/Cesta de Rosas Brancas.png" alt="Cesta da Paz" class="w-100 rounded">
                         </section>
-                        <a href="Encomendas.html" class="btn btn-outline-success">Encomende</a>
+                        <a href="Encomendas.html?nome=Cesta%20da%20Paz&preco=120.00" class="btn btn-outline-success">Encomende</a>
                     </article>
                 </article>
                 <article class="col-md-6">
@@ -83,4 +83,5 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../scripts.js"></script>
 </html>

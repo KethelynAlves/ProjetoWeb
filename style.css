@@ -86,17 +86,51 @@ h2::after {
 }
 
 
+#flores-selecao-collapse {
+    max-height: 300px; /*altura da caixa de seleção */
+    overflow-y: auto; 
+    background-color: #fdf8f8; /* Fundo branco para contraste */
+}
+
+#flores-selecao-container .form-check {
+    margin-bottom: 0.3rem; 
+    padding-left: 1.5em;
+}
+
+
+.form-check-input {
+    width: 1em; 
+    height: 1em;
+    margin-top: 0.25em; 
+    vertical-align: top;
+}
+
+
 #fieldset-encomenda label {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-#fieldset-encomenda label input[type=checkbox], input[type=radio] {
-    margin-left: 10px !important;
-    width: 20px !important;
+#fieldset-encomenda input:not([type="radio"]):not([type="checkbox"]), 
+#fieldset-encomenda textarea, 
+#fieldset-encomenda select {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
 }
 
-#fieldset-encomenda input, textarea, button {
+
+#fieldset-contato label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#fieldset-contato input:not([type="radio"]):not([type="checkbox"]), 
+#fieldset-contato textarea, 
+#fieldset-contato select {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
@@ -119,4 +153,12 @@ h2::after {
 .custom-footer p {
     margin: 3px 0;
     font-size: 14px;
+}
+
+.highlight {
+    background-color: yellow;
+    color: #3a7c3a;
+    font-weight: bold;
+    padding: 2px 4px;
+    border-radius: 3px;
 }
