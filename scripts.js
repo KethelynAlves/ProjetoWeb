@@ -1,54 +1,11 @@
 let dadosFlores = [];
-const form = document.getElementById('encomenda');
-if (form){
-    form.addEventListener('submit', function(event){
-        event.preventDefault();
-        if (!validarFormulario()){
-            console.log("Formulario Inválido. Corrija os erros.");
-        } else {
-            console.log("Formulário Válidado. Pronto para enviar.");
-            const detalhesFlores = calcularTotal();
-            const dados = {
-                nome: document.getElementById('nome').value.trim(),
-                celular: document.getElementById('celular').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                endereco: document.getElementById('endereco').value.trim(),
-                data: document.getElementById('dataRequerida').value.trim(),
-                horario: document.getElementById('horario').value.trim(),
-                pagamento: document.getElementById('pagamento').value,
-                pedido: document.getElementById('pedido').value.trim(),
-                pedidoTamanho: document.querySelector('input[name="Pedido"]:checked').value
-            }
-            const mensagem = `
-            Pedido Confimardo!
 
-            Dados da encomenda:
-            ---------------------------------------------
-            Nome: ${dados.nome}
-                Celular: ${dados.celular}
-                Email: ${dados.email}
-                Endereço: ${dados.endereco}
-                
-                Detalhes da Encomenda:
-                -------------------------------------
-                Flor/Item:
-                    ${detalhesFlores.itens} 
-                Tamanho do Pedido: ${dados.pedidoTamanho}(x${QUANTIDADES_PEDIDO[dados.pedidoTamanho]})
-                Data Requerida: ${dados.data} às ${dados.horario}
-                Pagamento: ${dados.pagamento}
-                Valor Total: R$ ${detalhesFlores.total}
-                Pedido Especial: ${dados.pedido || 'Nenhum'}
-                
-                Aperte OK para finalizar.
-            `;
-            alert(mensagem);
-            form.reset();
-            calcularTotal();
-        }
-    });
-} else {
-    console.error("Formulário não encontrado no documento.");
-}
+const QUANTIDADES_PEDIDO = {
+    "Unitario": 1,
+    "Pequeno": 6,
+    "Medio": 12,
+    "Grande": 20
+};
 
 function exibirErroEfocar(idCampo, mensagem){
     const campo = document.getElementById(idCampo);
@@ -58,13 +15,8 @@ function exibirErroEfocar(idCampo, mensagem){
     }
 }
 
-const QUANTIDADES_PEDIDO = {
-    "Unitario": 1,
-    "Pequeno": 6,
-    "Medio": 12,
-    "Grande": 20
-};
 
+/*Validações do Formulário*/
 
 function validarNome() {
     const nomeInput = document.getElementById('nome');
@@ -115,7 +67,6 @@ function validarCelular(){
 }
 
 
-
 function validarEmailPura(email) {
     const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return reEmail.test(email);
@@ -155,6 +106,67 @@ function validarSelecaoFlor(){
     }
     return true; 
 }
+
+
+function validarDataRequerida(){
+    const dataInput= document.getElementById('dataRequerida');
+    const valorData = dataInput.value.trim();
+    if (valorData === "") {
+        exibirErroEfocar('dataRequerida', "O campo Data Requerida é obrigatório.");
+        return false;
+    }
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    const dataRequerida = new Date(valorData+'T00:00:00');
+    dataRequerida.setHours(0, 0, 0, 0);
+
+    if (dataRequerida < hoje) {
+        exibirErroEfocar('dataRequerida', "A data requerida não pode ser no passado.");
+        return false;
+    }
+    return true; 
+}
+
+function validarHorarioRequerido(){
+    const horarioInput= document.getElementById('horario');
+    const valorhorario = horarioInput.value.trim();
+    if (valorhorario === "") {
+        exibirErroEfocar('horario', "O campo Horario Requerido é obrigatório.");
+        return false;
+    }
+    return true;
+}
+
+
+function validarFormulario(){
+    if (!validarNome()) return false;
+    if (!validarCelular()) return false;
+    if (!validarEmail()) return false;
+    if (!validarEndereco()) return false;
+    if (!validarSelecaoFlor()) return false
+    if (!validarDataRequerida()) return false;
+    if (!validarHorarioRequerido()) return false;
+    return true;
+} 
+
+function validarFormularioContato(){
+    if (!validarNome()) return false;
+    if (!validarEmail()) return false;
+    
+    const assunto = document.getElementById('assunto');
+    if (assunto && assunto.value === "") {
+        exibirErroEfocar('assunto', "O campo Assunto é obrigatório.");
+        return false;
+    }
+    const mensagem = document.getElementById('mensagem');
+    if (mensagem && mensagem.value.trim() === "") {
+        exibirErroEfocar('mensagem', "O campo Mensagem é obrigatório.");
+        return false;
+    }
+    return true;
+}
+
+/*CÁLCULO DO TOTAL E CARREGAMENTO DAS FLORES*/
 
 function calcularTotal() {
     const selecoes = document.querySelectorAll('#flores-selecao-container input[type="checkbox"]:checked');
@@ -239,10 +251,85 @@ function carregarFloresEncomenda(dados) {
     calcularTotal();
 }
 
+
+/*DA BUSCA*/
+
+function removeHighlights() {
+    const highlights = document.querySelectorAll('.highlight');
+    highlights.forEach(span => {
+        const parent = span.parentNode;
+        parent.replaceChild(document.createTextNode(span.textContent), span);
+        parent.normalize();
+    });
+}
+
+function searchInPage(searchTerm) {
+    if (!searchTerm) return;
+    removeHighlights();
+    const regex = new RegExp(searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
+    const mainContent = document.querySelector('main');
+    if (!mainContent) return;
+    let matchesFound = false;
+
+    function traverseAndHighlight(node) {
+        if (node.nodeType === 3) { 
+            const text = node.nodeValue;
+            if (regex.test(text)) {
+                const fragment = document.createDocumentFragment();
+                let lastIndex = 0;
+                
+                text.replace(regex, (match, offset) => {
+                    fragment.appendChild(document.createTextNode(text.substring(lastIndex, offset)));
+                    const span = document.createElement('span');
+                    span.className = 'highlight';
+                    span.textContent = match;
+                    fragment.appendChild(span);
+                    lastIndex = offset + match.length;
+                    matchesFound = true;
+                });
+                
+                fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+                node.parentNode.replaceChild(fragment, node);
+            }
+        } else if (node.nodeType === 1) { 
+            if (node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'BUTTON' && node.className !== 'highlight') {
+                for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                    traverseAndHighlight(node.childNodes[i]);
+                }
+            }
+        }
+    }
+
+    traverseAndHighlight(mainContent);
+    
+    if (matchesFound) {
+        const firstHighlight = document.querySelector('.highlight');
+        if (firstHighlight) {
+            firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    } else {
+        alert(`Nenhuma ocorrência encontrada para "${searchTerm}".`);
+    }
+}
+
+
+
+
+
+
+
+
+/*CARREGAR DADOS DA TABELA E FLORES*/
+
 document.addEventListener('DOMContentLoaded', () => {
     const corpoTabela = document.getElementById('corpo-tabela');
     const mensagemErro = document.getElementById('mensagem-erro');
     const floresContainer = document.getElementById('flores-selecao-container');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const inputCelular = document.getElementById('celular');
+    const formEncomenda = document.getElementById('encomenda');
+    const formContato = document.getElementById('contato');
 
     async function carregarDados() {
         try {
@@ -293,156 +380,102 @@ document.addEventListener('DOMContentLoaded', () => {
     if (corpoTabela || floresContainer) {
         carregarDados();
     }
-});
 
-
-function validarDataRequerida(){
-    const dataInput= document.getElementById('dataRequerida');
-    const valorData = dataInput.value.trim();
-    if (valorData === "") {
-        exibirErroEfocar('dataRequerida', "O campo Data Requerida é obrigatório.");
-        return false;
-    }
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-    const dataRequerida = new Date(valorData+'T00:00:00');
-    dataRequerida.setHours(0, 0, 0, 0);
-
-    if (dataRequerida < hoje) {
-        exibirErroEfocar('dataRequerida', "A data requerida não pode ser no passado.");
-        return false;
-    }
-    return true; 
-}
-
-function validarHorarioRequerido(){
-    const horarioInput= document.getElementById('horario');
-    const valorhorario = horarioInput.value.trim();
-    if (valorhorario === "") {
-        exibirErroEfocar('horario', "O campo Horario Requerido é obrigatório.");
-        return false;
-    }
-    return true;
-}
-
-function validarFormulario(){
-    if (!validarNome()) return false;
-    if (!validarCelular()) return false;
-    if (!validarEmail()) return false;
-    if (!validarEndereco()) return false;
-    if (!validarSelecaoFlor()) return false
-    if (!validarDataRequerida()) return false;
-    if (!validarHorarioRequerido()) return false;
-    return true;
-} 
-
-
-/*DO CONTATO*/
-
-const formContato = document.getElementById('contato');
-if (formContato){
-    formContato.addEventListener('submit', function(event){
-        event.preventDefault();
-        if (!validarFormulario()){
-            console.log("Formulario Inválido! Corrija os erros.");
-        } else {
-            console.log("Formulário Válidado! Pronto para enviar.");
-            const dados = {
-                nome: document.getElementById('nomeContato').value.trim(),
-                email: document.getElementById('emailContato').value.trim(),
-                celular: document.getElementById('celular').value.trim(),
-                assunto: document.getElementById('assunto').value,
-                mensagem: document.getElementById('mensagem').value.trim(),
-                horario: document.getElementById('horario').value.trim()
-            }
-            const texto = `
-            Mensagem enviada com sucesso!
-            
-            Dados do Contato:
-            ------------------------------
-            Nome: ${nome}
-            E-mail: ${email}
-            Celular: ${celular || 'Não informado'}
-            Assunto: ${assunto}
-            Mensagem:
-            ${mensagem}
-            
-            Obrigado por entrar em contato! Responderemos em breve.
-            `;
-            alert(texto);
-            formContato.reset();
-        }
-    });
-} else {
-    console.error("Formulário não encontrado no documento.");
-}
-
-
-/* BUSCAR PAGINA */
-
-function removeHighlights() {
-    const highlights = document.querySelectorAll('.highlight');
-    highlights.forEach(span => {
-        // Substitui o <span> pelo seu próprio conteúdo de texto
-        const parent = span.parentNode;
-        parent.replaceChild(document.createTextNode(span.textContent), span);
-        parent.normalize(); // Combina nós de texto adjacentes (limpeza)
-    });
-}
-
-function searchInPage(searchTerm) {
-    if (!searchTerm) return;
-
-    removeHighlights();
-
-    const regex = new RegExp(searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
-    const mainContent = document.querySelector('main');
-
-    if (!mainContent) return;
-
-    let matchesFound = false;
-
-    function traverseAndHighlight(node) {
-        if (node.nodeType === 3) { 
-            const text = node.nodeValue;
-            
-            if (regex.test(text)) {
-                const fragment = document.createDocumentFragment();
-                let lastIndex = 0;
-                
-                text.replace(regex, (match, offset) => {
-                    fragment.appendChild(document.createTextNode(text.substring(lastIndex, offset)));
-                    
-                    const span = document.createElement('span');
-                    span.className = 'highlight';
-                    span.textContent = match;
-                    fragment.appendChild(span);
-                    
-                    lastIndex = offset + match.length;
-                    matchesFound = true;
-                });
-                
-                fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
-                
-                node.parentNode.replaceChild(fragment, node);
-            }
-        } else if (node.nodeType === 1) { 
-            if (node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'BUTTON' && node.className !== 'highlight') {
-                for (let i = node.childNodes.length - 1; i >= 0; i--) {
-                    traverseAndHighlight(node.childNodes[i]);
+    /*DO FORMULÁRIO DE ENCOMENDA*/
+    if (formEncomenda){
+        formEncomenda.addEventListener('submit', function(event){
+            event.preventDefault();
+            if (!validarFormulario()){
+                console.log("Formulario Inválido. Corrija os erros.");
+            } else {
+                console.log("Formulário Válidado. Pronto para enviar.");
+                const detalhesFlores = calcularTotal();
+                const dados = {
+                    nome: document.getElementById('nome').value.trim(),
+                    celular: document.getElementById('celular').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    endereco: document.getElementById('endereco').value.trim(),
+                    data: document.getElementById('dataRequerida').value.trim(),
+                    horario: document.getElementById('horario').value.trim(),
+                    pagamento: document.getElementById('pagamento').value,
+                    pedido: document.getElementById('pedido').value.trim(),
+                    pedidoTamanho: document.querySelector('input[name="Pedido"]:checked').value
                 }
+                const mensagem = `
+                Pedido Confimardo!
+
+                Dados da encomenda:
+                ---------------------------------------------
+                Nome: ${dados.nome}
+                Celular: ${dados.celular}
+                Email: ${dados.email}
+                Endereço: ${dados.endereco}                    
+                Detalhes da Encomenda:
+                -------------------------------------
+                Flor/Item:
+                ${detalhesFlores.itens} 
+                
+                Tamanho do Pedido: ${dados.pedidoTamanho}(x${QUANTIDADES_PEDIDO[dados.pedidoTamanho]})
+                Data Requerida: ${dados.data} às ${dados.horario}
+                Pagamento: ${dados.pagamento}
+                Valor Total: R$ ${detalhesFlores.total}
+                Pedido Especial: ${dados.pedido || 'Nenhum'}
+                    
+                Aperte OK para finalizar.
+                `
+                alert(mensagem);
+                formEncomenda.reset();
+                calcularTotal();
             }
-        }
+        });
     }
 
-    traverseAndHighlight(mainContent);
-    
-    if (matchesFound) {
-        const firstHighlight = document.querySelector('.highlight');
-        if (firstHighlight) {
-            firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    } else {
-        alert(`Nenhuma ocorrência encontrada para "${searchTerm}".`);
+    /*DO FORMULARIO DE CONTATO*/
+    if (formContato){
+        formContato.addEventListener('submit', function(event){
+            event.preventDefault();
+            if (!validarFormularioContato()){
+                console.log("Formulario Inválido! Corrija os erros.");
+            } else {
+                console.log("Formulário Válidado! Pronto para enviar.");
+                const dadosC = {
+                    nome: document.getElementById('nome').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    celular: document.getElementById('celular').value.trim(),
+                    assunto: document.getElementById('assunto').value,
+                    mensagem: document.getElementById('mensagem').value.trim()
+                }
+                const texto = `
+                Mensagem enviada com sucesso!
+                
+                Dados do Contato:
+                ------------------------------
+                Nome: ${dadosC.nome}
+                E-mail: ${dadosC.email}
+                Celular: ${dadosC.celular || 'Não informado'}
+                Assunto: ${dadosC.assunto}
+                Mensagem:
+                ${dadosC.mensagem}
+                
+                Obrigado por entrar em contato! Responderemos em breve.
+                        `;
+                
+                        alert(texto);
+                        formContato.reset();
+            }
+                    });
     }
-}
+
+    if (searchForm && searchInput) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchTerm = searchInput.value.trim();
+            searchInPage(searchTerm);
+        });
+        searchInput.addEventListener('input', removeHighlights);
+    }
+
+    if (corpoTabela || floresContainer) {
+        carregarDados();
+    }
+});
