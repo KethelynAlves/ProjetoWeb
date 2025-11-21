@@ -55,7 +55,6 @@ h2::after {
 }
 
 
-
 /* Seção Sobre */
 .sobre-home {
     background-color: #caeab9a4; /* verde pastel */
@@ -158,9 +157,9 @@ h2::after {
 }
 
 .highlight {
-    background-color: yellow;
-    color: #3a7c3a;
+    background-color: rgb(255, 221, 127);
+    color: #c90909;
     font-weight: bold;
     padding: 2px 4px;
-    border-radius: 3px;
+    border-radius: 5px;
 }

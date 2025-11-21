@@ -30,26 +30,6 @@ function validarNome() {
 }
 
 
-const inputCelular = document.getElementById('celular');
-if (inputCelular){
-inputCelular.addEventListener('input', function (e) {
-    let valor = e.target.value;
-    valor = valor.replace(/\D/g, ""); 
-    valor = valor.substring(0, 11);
-
-    let valorFormatado = "";
-    if (valor.length > 0) {
-        valorFormatado = "(" + valor.substring(0, 2); 
-    }
-    if (valor.length > 2) {
-        valorFormatado += ") " + valor.substring(2, 7); 
-    }
-    if (valor.length > 7) {
-        valorFormatado += "-" + valor.substring(7, 11); 
-    }
-    e.target.value = valorFormatado;
-});
-}
 
 function validarCelular(){
     const celularInput= document.getElementById('celular');
@@ -478,4 +458,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (corpoTabela || floresContainer) {
         carregarDados();
     }
+
+    if (inputCelular){
+        inputCelular.addEventListener('input', function (e) {
+            let valor = e.target.value;
+            valor = valor.replace(/\D/g, ""); 
+            valor = valor.substring(0, 11);
+
+            let valorFormatado = "";
+            if (valor.length > 0) {
+                valorFormatado = "(" + valor.substring(0, 2); 
+            }
+            if (valor.length > 2) {
+                valorFormatado += ") " + valor.substring(2, 7); 
+            }
+            if (valor.length > 7) {
+                valorFormatado += "-" + valor.substring(7, 11); 
+            }
+            e.target.value = valorFormatado;
+        });
+    }
+
+    
 });
