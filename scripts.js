@@ -151,13 +151,10 @@ function validarFormulario(){
     if (!validarDataRequerida()) return false;
     if (!validarHorarioRequerido()) return false;
 
-    const selectProdutoPronto = document.getElementById('produtoPronto');
+    const selectProdutoPronto = document.getElementById('#fieldset-quantidade-pronto select');
     const selecoesFlores = document.querySelectorAll('#flores-selecao-container input[type="checkbox"]:checked');
-    if (selectProdutoPronto && selectProdutoPronto.value !== "Nenhum Arranjo/Cesta" && selecoesFlores.length > 0) {
-        exibirErroEfocar('produtoPronto', "Por favor, escolha entre flores avulsas ou um produto pronto, não ambos.");
-        return false;
-    }
-    if (!produtoProntoSelecionado && selecoesFlores.length === 0) {
+   
+    if (selecoesFlores.length === 0 && (selectProdutoPronto && selectProdutoPronto.value === PRODUTOS_PRONTOS[0].nome)) {
         exibirErroEfocar('flores-selecao-container', "Por favor, selecione pelo menos uma flor/item ou um produto pronto para a encomenda.");
         return false;
     }
