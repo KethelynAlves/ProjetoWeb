@@ -7,6 +7,22 @@ const QUANTIDADES_PEDIDO = {
     "Grande": 20
 };
 
+const MAX_QUANTIDADE_PRODUTOS = 200;
+
+const PRODUTOS_PRONTOS = [
+    { nome: "Nenhum Arranjo/Cesta", valor: 0.00, tipo: "Nenhum" },
+    { nome: "Arranjo de Orquídeas Amarelas", valor: 105.00, tipo: "Arranjo" },
+    { nome: "Arranjo de Orquídeas Brancas", valor: 95.00, tipo: "Arranjo" },
+    { nome: "Arranjo de Girassóis e Flores Silvestres", valor: 195.00, tipo: "Arranjo" },
+    { nome: "Arranjo de Rosas e Eucalipito", valor: 200.00, tipo: "Arranjo" },
+    { nome: "Cesta da Paz", valor: 120.00, tipo: "Cesta" },
+    { nome: "Cesta de Rosas", valor: 150.00, tipo: "Cesta" },
+    { nome: "Cesta da Luz", valor: 170.00, tipo: "Cesta" },
+    { nome: "Cesta do Amor", valor: 190.00, tipo: "Cesta" },
+]
+
+
+
 function exibirErroEfocar(idCampo, mensagem){
     const campo = document.getElementById(idCampo);
     alert(mensagem)
@@ -20,6 +36,7 @@ function exibirErroEfocar(idCampo, mensagem){
 
 function validarNome() {
     const nomeInput = document.getElementById('nome');
+    if (!nomeInput) return true;
     const valorNome = nomeInput.value.trim();
 
     if (valorNome === "") {
@@ -78,10 +95,17 @@ function validarEndereco(){
 
 function validarSelecaoFlor(){
     const container = document.getElementById('flores-selecao-container');
-    if (!container) return true;
-    const selecoes = container.querySelectorAll('input[type="checkbox"]:checked');
-    if (selecoes.length === 0) {
-        exibirErroEfocar(container.previousElementSibling.id || 'flores-selecao-container', "Por favor, selecione pelo menos uma flor/item para a encomenda.");
+    const selectProdutoPronto = document.getElementById('produtoPronto');
+    const inputQuantidadePronto = document.getElementById('quantidadePronto');
+
+    const nenhumProdutoSelecionado = (selectProdutoPronto && PRODUTOS_PRONTOS.length > 0) ? selectProdutoPronto.value === PRODUTOS_PRONTOS[0].nome : true;
+    const quantidadeProntoValida = !nenhumProdutoSelecionado && (parseInt(inputQuantidadePronto.value) > 0);
+    
+    const selecoes = container ? container.querySelectorAll('input[type="checkbox"]:checked') : [];
+    const floresAvulsasSelecionadas = selecoes.length > 0;
+
+    if (!quantidadeProntoValida && !floresAvulsasSelecionadas) {
+        exibirErroEfocar('flores-selecao-container', "Por favor, selecione pelo menos uma flor/item para a encomenda.");
         return false;
     }
     return true; 
@@ -123,9 +147,21 @@ function validarFormulario(){
     if (!validarCelular()) return false;
     if (!validarEmail()) return false;
     if (!validarEndereco()) return false;
-    if (!validarSelecaoFlor()) return false
+    if (!validarSelecaoFlor()) return false;
     if (!validarDataRequerida()) return false;
     if (!validarHorarioRequerido()) return false;
+
+    const selectProdutoPronto = document.getElementById('produtoPronto');
+    const selecoesFlores = document.querySelectorAll('#flores-selecao-container input[type="checkbox"]:checked');
+    if (selectProdutoPronto && selectProdutoPronto.value !== "Nenhum Arranjo/Cesta" && selecoesFlores.length > 0) {
+        exibirErroEfocar('produtoPronto', "Por favor, escolha entre flores avulsas ou um produto pronto, não ambos.");
+        return false;
+    }
+    if (!produtoProntoSelecionado && selecoesFlores.length === 0) {
+        exibirErroEfocar('flores-selecao-container', "Por favor, selecione pelo menos uma flor/item ou um produto pronto para a encomenda.");
+        return false;
+    }
+
     return true;
 } 
 
@@ -146,13 +182,13 @@ function validarFormularioContato(){
     return true;
 }
 
-/*CÁLCULO DO TOTAL E CARREGAMENTO DAS FLORES*/
+/*CÁLCULO DO TOTAL E CARREGAMENTO DAS FLORES e ARRANJOS/CESTAS*/
 
 function calcularTotal() {
-    const selecoes = document.querySelectorAll('#flores-selecao-container input[type="checkbox"]:checked');
     let precoTotalUnitario = 0;
     let itensSelecionados = [];
     
+    const selecoes = document.querySelectorAll('#flores-selecao-container input[type="checkbox"]:checked');
     selecoes.forEach(checkbox => {
         const nomeFlor = checkbox.value;
         const flor = dadosFlores.find(f => f.nome === nomeFlor);
@@ -164,16 +200,35 @@ function calcularTotal() {
             itensSelecionados.push(`${nomeFlor} (R$ ${parseFloat(flor.valor).toFixed(2).replace('.', ',')})`);
         }
     });
-    
-    const pedidoTamanhoRadio = document.querySelector('input[name="Pedido"]:checked');
-    let multiplicador = 1;
 
+    const pedidoTamanhoRadio = document.querySelector('input[name="Pedido"]:checked');
+    let multiplicadorRadio = 1;
     if (pedidoTamanhoRadio) {
-        const tamanho = pedidoTamanhoRadio.value;
-        multiplicador = QUANTIDADES_PEDIDO[tamanho] || 1; 
+        multiplicadorRadio = QUANTIDADES_PEDIDO[pedidoTamanhoRadio.value] || 1; 
+    }
+    const totalFloresRadio = precoTotalUnitario * multiplicadorRadio;
+
+
+
+    /*Cálculo do Produto Pronto, anterior unitario*/
+    const selectProdutoPronto = document.getElementById('produtoPronto');
+    const inputQuantidadeProduto = document.getElementById('quantidadePronto');
+    let totalPronto = 0;
+
+    if (selectProdutoPronto && inputQuantidadeProduto && selectProdutoPronto.value !== PRODUTOS_PRONTOS[0].nome) {
+        const nomeProduto = selectProdutoPronto.value;
+        const produto = PRODUTOS_PRONTOS.find(p => p.nome === nomeProduto);
+        
+        let quantidadePronto = Math.min(Math.max(parseInt(inputQuantidadeProduto.value) || 1, 1), MAX_QUANTIDADE_PRODUTOS);
+        inputQuantidadeProduto.value = quantidadePronto;
+
+        if (produto && produto.valor>0) {
+            totalPronto = produto.valor * quantidadePronto;
+            itensSelecionados.push(`${produto.nome} (x${quantidadePronto}) (R$ ${totalPronto.toFixed(2).replace('.', ',')}) - Produto Pronto`);
+        }
     }
     
-    const valorTotalFinal = precoTotalUnitario * multiplicador;
+    const valorTotalFinal = totalFloresRadio + totalPronto;
 
     const valorTotalElemento = document.getElementById('valor-total');
     if (valorTotalElemento) {
@@ -228,8 +283,26 @@ function carregarFloresEncomenda(dados) {
         targetCol.appendChild(divItem);
     });
     container.addEventListener('change', calcularTotal);
-    calcularTotal();
 }
+
+function carregarProdutoPronto() {
+    const select = document.getElementById('produtoPronto');
+    const fieldsetQuantidade = document.getElementById('fieldset-quantidade-pronto');
+    const inputQuantidadePronto = document.getElementById('quantidadePronto');
+
+    if (!select || !fieldsetQuantidade ||!inputQuantidadePronto) return;
+    select.innerHTML = '';
+
+    PRODUTOS_PRONTOS.forEach(produto => {
+        const option = document.createElement('option');
+        option.value = produto.nome;
+        option.textContent = produto.valor > 0 
+        ?`${produto.nome} (R$ ${produto.valor.toFixed(2).replace('.', ',')})`: produto.nome;
+        select.appendChild(option);
+    });
+    fieldsetQuantidade.addEventListener('change', calcularTotal);
+}
+
 
 
 /*DA BUSCA*/
@@ -340,7 +413,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (floresContainer) {
+                carregarProdutoPronto();
                 carregarFloresEncomenda(dados);
+
+                document.querySelectorAll('input[name="Pedido"]').forEach(radio => {
+                    radio.addEventListener('change', calcularTotal);
+                });
+                
+                calcularTotal();
             }
 
         } catch (error) {
@@ -352,14 +432,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 mensagemErro.textContent = `Erro ao carregar os dados: ${error.message}. Verifique o console para mais detalhes.`;
             }
             if (floresContainer) {
-                 floresContainer.textContent = `Erro ao carregar opções: ${error.message}`;
+                floresContainer.textContent = `Erro ao carregar opções: ${error.message}`;
             }
         }
     }
 
-    if (corpoTabela || floresContainer) {
-        carregarDados();
-    }
 
     /*DO FORMULÁRIO DE ENCOMENDA*/
     if (formEncomenda){
